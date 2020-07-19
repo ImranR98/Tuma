@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ssh_drop/screens/drop.dart';
 import 'package:ssh_drop/screens/help.dart';
 import 'package:ssh_drop/screens/home.dart';
-import 'package:ssh_drop/screens/target.dart';
+import 'package:ssh_drop/screens/targets.dart';
 
 void main() {
   runApp(MyApp());
