@@ -18,10 +18,10 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       routes: {
-        '/': (context) => Home(),
-        '/target': (context) => Target(),
-        '/drop': (context) => Drop(),
-        '/help': (context) => Help(),
+        '/': (context) => HomePage(),
+        '/target': (context) => TargetsPage(),
+        '/drop': (context) => DropPage(),
+        '/help': (context) => HelpPage(),
       },
     );
   }

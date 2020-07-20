@@ -42,6 +42,7 @@ class DBProvider {
   }
 
   Future<List<Target>> getAllTargets() async {
+    print("Getting all Targets");
     final db = await database;
     List<Map<String, dynamic>> targetMapsRO = await db.query("Target");
     List<Map<String, dynamic>> targetMaps = targetMapsRO
@@ -56,6 +57,7 @@ class DBProvider {
   }
 
   getTarget(int id) async {
+    print("Getting Target $id");
     final db = await database;
     var targetMaps = await db.query("Target", where: "id = ?", whereArgs: [id]);
     if (targetMaps.isEmpty) return Null;
@@ -75,6 +77,7 @@ class DBProvider {
 
   Future<int> newTarget(Target newTarget) async {
     newTarget.id = new Random().nextInt(100000);
+    print("Creating Target ${newTarget.id}");
     final db = await database;
     Map<String, dynamic> newT = newTarget.toMap();
     List<dynamic> hosts = newT.remove("hosts");
@@ -90,6 +93,7 @@ class DBProvider {
   }
 
   updateTarget(Target updatedTarget) async {
+    print("Updating Target ${updatedTarget.id}");
     final db = await database;
     Map<String, dynamic> updatedT = updatedTarget.toMap();
     List<dynamic> hosts = updatedT.remove("hosts");
@@ -108,18 +112,21 @@ class DBProvider {
   }
 
   deleteTarget(int id) async {
+    print("Deleting Target $id");
     final db = await database;
     await db.delete("Host", where: "targetId = ?", whereArgs: [id]);
     await db.delete("Target", where: "id = ?", whereArgs: [id]);
   }
 
   deleteAllTargets() async {
+    print("Deleting all Targets");
     final db = await database;
     await db.delete("Host");
     await db.delete("Target");
   }
 
   deleteDB() async {
+    print("Deleting Database");
     deleteDatabase(
         join((await getApplicationDocumentsDirectory()).path, "SSHDropDB.db"));
   }

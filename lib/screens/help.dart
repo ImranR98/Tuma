@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Help extends StatefulWidget {
-  Help({Key key}) : super(key: key);
+class HelpPage extends StatefulWidget {
+  HelpPage({Key key}) : super(key: key);
 
   @override
-  _HelpState createState() => _HelpState();
+  _HelpPageState createState() => _HelpPageState();
 }
 
-class _HelpState extends State<Help> {
+class _HelpPageState extends State<HelpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -38,7 +38,9 @@ class Target {
   Map<String, dynamic> toMap() => {
         "id": id,
         "name": name,
-        "hosts": List<dynamic>.from(hosts.map((x) => x.toMap())),
+        "hosts": hosts != null
+            ? List<dynamic>.from(hosts.map((x) => x.toMap()))
+            : new List<dynamic>(),
         "user": user,
         "password": password,
         "privateKey": privateKey,

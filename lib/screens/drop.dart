@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Drop extends StatefulWidget {
-  Drop({Key key}) : super(key: key);
+class DropPage extends StatefulWidget {
+  DropPage({Key key}) : super(key: key);
 
   @override
-  _DropState createState() => _DropState();
+  _DropPageState createState() => _DropPageState();
 }
 
-class _DropState extends State<Drop> {
+class _DropPageState extends State<DropPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
