@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ssh_drop/screens/drop.dart';
 import 'package:ssh_drop/screens/help.dart';
 import 'package:ssh_drop/screens/home.dart';
-import 'package:ssh_drop/screens/targets.dart';
+import 'package:ssh_drop/screens/target.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/': (context) => HomePage(),
-        '/target': (context) => TargetsPage(),
+        '/target': (context) => TargetPage(),
         '/drop': (context) => DropPage(),
         '/help': (context) => HelpPage(),
       },
