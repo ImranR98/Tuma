@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ssh_drop/models/target.dart';
+import 'package:ssh_drop/blocs/targetBloc.dart';
 
 class TargetPage extends StatefulWidget {
   final Target existingTarget;
@@ -16,6 +17,7 @@ class _TargetPageState extends State<TargetPage> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
   final privatekeyController = TextEditingController();
+  final pathController = TextEditingController();
 
   @override
   void dispose() {
@@ -23,6 +25,7 @@ class _TargetPageState extends State<TargetPage> {
     usernameController.dispose();
     passwordController.dispose();
     privatekeyController.dispose();
+    pathController.dispose();
     super.dispose();
   }
 
@@ -33,6 +36,15 @@ class _TargetPageState extends State<TargetPage> {
       this.target = widget.existingTarget;
     else
       this.target = new Target();
+
+    this.nameController.text = this.target.name != null ? this.target.name : "";
+    this.usernameController.text =
+        this.target.user != null ? this.target.user : "";
+    this.passwordController.text =
+        this.target.password != null ? this.target.password : "";
+    this.privatekeyController.text =
+        this.target.privateKey != null ? this.target.privateKey : "";
+    this.pathController.text = this.target.path != null ? this.target.path : "";
   }
 
   @override
@@ -91,12 +103,37 @@ class _TargetPageState extends State<TargetPage> {
                     return null;
                   },
                 ),
+                TextFormField(
+                  decoration: InputDecoration(labelText: "Path"),
+                  controller: pathController,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter a Path';
+                    }
+                    return null;
+                  },
+                ),
                 FlatButton(
                   textColor: Theme.of(context).primaryColor,
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState.validate()) {
-                      print(nameController.text);
-                      print('AH');
+                      if (this.target.id != null) {
+                        await targetBloc.edit(new Target(
+                            id: this.target.id,
+                            name: nameController.text,
+                            user: usernameController.text,
+                            password: passwordController.text,
+                            privateKey: privatekeyController.text,
+                            path: pathController.text));
+                      } else {
+                        await targetBloc.add(new Target(
+                            name: nameController.text,
+                            user: usernameController.text,
+                            password: passwordController.text,
+                            privateKey: privatekeyController.text,
+                            path: pathController.text));
+                      }
+                      Navigator.pop(context);
                     }
                   },
                   child: Text('Save'),
