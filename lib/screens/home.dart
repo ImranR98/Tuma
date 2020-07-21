@@ -1,7 +1,4 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 import 'package:ssh_drop/blocs/targetBloc.dart';
 import 'package:ssh_drop/models/target.dart';
 import 'package:ssh_drop/screens/target.dart';
@@ -139,7 +136,7 @@ class _HomePageState extends State<HomePage> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
-                                "Delete",
+                                'Delete',
                                 style: TextStyle(color: Colors.white),
                               )
                             ],
@@ -153,7 +150,7 @@ class _HomePageState extends State<HomePage> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Text(
-                                "Edit",
+                                'Edit',
                                 style: TextStyle(color: Colors.white),
                               )
                             ],
