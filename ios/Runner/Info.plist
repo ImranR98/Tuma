@@ -41,5 +41,14 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Allows the User to upload audio files</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Allows the User to upload pictures and video</string>
 </dict>
 </plist>

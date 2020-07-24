@@ -285,6 +285,48 @@ class _TargetPageState extends State<TargetPage> {
                                 },
                           child: Text('Cancel'),
                         ),
+                        Visibility(
+                          visible: widget.existingTarget != null,
+                          child: FlatButton(
+                            onPressed: this.disabled
+                                ? null
+                                : () async {
+                                    var res = await showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return AlertDialog(
+                                            title: Text('Delete'),
+                                            content:
+                                                Text('Delete this Target?'),
+                                            actions: [
+                                              FlatButton(
+                                                child: Text('Cancel'),
+                                                onPressed: () {
+                                                  Navigator.of(context)
+                                                      .pop(false);
+                                                },
+                                              ),
+                                              FlatButton(
+                                                child: Text('Delete'),
+                                                onPressed: () {
+                                                  Navigator.of(context)
+                                                      .pop(true);
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        });
+                                    if (res && widget.existingTarget != null) {
+                                      await targetBloc
+                                          .delete(widget.existingTarget.id);
+                                      Navigator.pop(context);
+                                    }
+                                  },
+                            child: Text(
+                              'Delete',
+                            ),
+                          ),
+                        ),
                         FlatButton(
                           onPressed: this.disabled
                               ? null

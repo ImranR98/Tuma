@@ -85,31 +85,6 @@ class _HomePageState extends State<HomePage> {
                         key: new Key(UniqueKey().toString()),
                         confirmDismiss: (DismissDirection dir) async {
                           if (dir == DismissDirection.startToEnd) {
-                            var res = await showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    title: Text('Delete Target'),
-                                    content:
-                                        Text('${snapshot.data[index].name}'),
-                                    actions: [
-                                      FlatButton(
-                                        child: Text('Cancel'),
-                                        onPressed: () {
-                                          Navigator.of(context).pop(false);
-                                        },
-                                      ),
-                                      FlatButton(
-                                        child: Text('Delete'),
-                                        onPressed: () {
-                                          Navigator.of(context).pop(true);
-                                        },
-                                      ),
-                                    ],
-                                  );
-                                });
-                            return res;
-                          } else {
                             await Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -117,40 +92,36 @@ class _HomePageState extends State<HomePage> {
                                       existingTarget: snapshot.data[index]),
                                 ));
                             targetBloc.updateTargets();
-                            return false;
+                          } else {
+                            // TODO: Bring up file picker and send file paths, along with Target, to new Upload page
                           }
-                        },
-                        onDismissed: (dir) async {
-                          await targetBloc.delete(snapshot.data[index].id);
-                          setState(() {
-                            snapshot.data.removeAt(index);
-                          });
+                          return false;
                         },
                         child: ListTile(
                             title: Text('${snapshot.data[index].name}')),
                         background: Container(
-                          color: Colors.red,
-                          padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                          color: Theme.of(context).accentColor,
+                          padding: EdgeInsets.fromLTRB(20, 0, 00, 0),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
-                                'Delete',
+                                'Edit',
                                 style: TextStyle(color: Colors.white),
                               )
                             ],
                           ),
                         ),
                         secondaryBackground: Container(
-                          color: Colors.blue,
-                          padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                          color: Theme.of(context).primaryColor,
+                          padding: EdgeInsets.fromLTRB(00, 0, 20, 0),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Text(
-                                'Edit',
+                                'Upload',
                                 style: TextStyle(color: Colors.white),
                               )
                             ],
@@ -176,6 +147,7 @@ class _HomePageState extends State<HomePage> {
         },
         tooltip: 'Add Target',
         child: Icon(Icons.add),
+        backgroundColor: Theme.of(context).primaryColor,
       ),
     );
   }
