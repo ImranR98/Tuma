@@ -29,7 +29,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-/* TODO:
- - App icon
-*/
