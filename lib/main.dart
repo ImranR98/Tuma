@@ -30,8 +30,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-/* TODO:
- - Add screenshots to README
- - Publish to Play store
-*/
