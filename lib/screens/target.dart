@@ -343,8 +343,8 @@ class _TargetPageState extends State<TargetPage> {
                                                   getTargetFromForm());
                                       Scaffold.of(context).showSnackBar(SnackBar(
                                           content: Text(target.hosts.length > 1
-                                              ? 'Connection Successful on ${target.hosts[hostIndex].hostName}'
-                                              : 'Connection Successful')));
+                                              ? 'Connection Successful on ${target.hosts[hostIndex].hostName}.'
+                                              : 'Connection Successful.')));
                                     } catch (err) {
                                       Scaffold.of(context).showSnackBar(
                                           SnackBar(content: Text(err)));

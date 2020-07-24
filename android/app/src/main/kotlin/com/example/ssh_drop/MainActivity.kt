@@ -1,4 +1,4 @@
-package com.example.ssh_drop
+package dev.imranr.ssh_drop
 
 import io.flutter.embedding.android.FlutterActivity
 

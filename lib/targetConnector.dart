@@ -28,7 +28,7 @@ class TargetConnector {
         String targetPath =
             (await connections[i].execute('cd / && ls -d ${target.path}'))
                 .trim();
-        if (targetPath.length == 0) throw 'Path does not exist';
+        if (targetPath.length == 0) throw 'Path does not exist.';
 
         String testDirPath =
             '$targetPath/SSHDrop_TestDir_${Random().nextInt(10000)}';
@@ -38,14 +38,17 @@ class TargetConnector {
             .trim();
 
         if (testDir.length == 0)
-          throw 'You don\'t have permission to write to this path';
+          throw 'You don\'t have permission to write to this path.';
 
         success = true;
         hostIndex = i;
 
         await connections[i].disconnect();
       } on PlatformException catch (err) {
-        message = err.message;
+        if (err.code == 'connection_failure')
+          message = 'Connection or Authentication Error.';
+        else
+          message = err.message;
       } on String catch (err) {
         message = err;
       }
@@ -83,7 +86,10 @@ class TargetConnector {
 
       return results;
     } on PlatformException catch (err) {
-      throw err.message;
+      if (err.code == 'connection_failure')
+        throw 'Connection or Authentication Error.';
+      else
+        throw err.message;
     }
   }
 }

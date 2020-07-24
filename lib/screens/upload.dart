@@ -40,7 +40,7 @@ class _UploadPageState extends State<UploadPage> {
         });
       });
       widget.scaffoldKey.currentState.showSnackBar(SnackBar(
-        content: Text('Uploaded'),
+        content: Text('Uploaded.'),
       ));
     } on String catch (err) {
       widget.scaffoldKey.currentState.showSnackBar(SnackBar(
