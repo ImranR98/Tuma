@@ -1,16 +1,15 @@
-# tuma
+# Tuma
 
 Upload files to SFTP servers.
 
-## Getting Started
+## Help
 
-This project is a starting point for a Flutter application.
+The data required to upload files to a specific path on an SFTP server is called a Target.
 
-A few resources to get you started if this is your first Flutter project:
+Saved Targets are listed on the Main screen. Click the + button at the bottom of the Main screen to add a Target.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Targets must define a Title, Username, Password or Private Key, and at least one Host with its Port. If a Password is provided, the Private Key won\'t be used.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+An alternate Host can be added in case connection to the first one fails.
+
+To Edit a saved Target or Upload files to it, swipe it to the left or right to access the relevant option.
