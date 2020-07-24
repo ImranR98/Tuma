@@ -56,7 +56,10 @@ class _HomePageState extends State<HomePage> {
               child: Text(
                 'Loading',
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.grey[700]),
+                style: TextStyle(
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.grey[200]
+                        : Colors.grey[700]),
                 textScaleFactor: 1.5,
               ),
             );
@@ -79,15 +82,23 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Icon(
                         Icons.arrow_left,
-                        color: Colors.grey[700],
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.grey[200]
+                            : Colors.grey[700],
                       ),
                       Text(
                         'Swipe',
-                        style: TextStyle(color: Colors.grey[700]),
+                        style: TextStyle(
+                            color:
+                                Theme.of(context).brightness == Brightness.dark
+                                    ? Colors.grey[200]
+                                    : Colors.grey[700]),
                       ),
                       Icon(
                         Icons.arrow_right,
-                        color: Colors.grey[700],
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.grey[200]
+                            : Colors.grey[700],
                       )
                     ],
                   ),

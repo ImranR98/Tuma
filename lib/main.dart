@@ -9,15 +9,17 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  final primaryColor = Colors.red;
+  final accentColor = Colors.blue;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'SSH Drop',
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-        accentColor: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
+      theme: ThemeData(primaryColor: primaryColor, accentColor: accentColor),
+      darkTheme: ThemeData(
+          primaryColor: primaryColor,
+          accentColor: accentColor,
+          brightness: Brightness.dark),
       routes: {
         '/': (context) => HomePage(),
         '/target': (context) => TargetPage(),
@@ -29,6 +31,5 @@ class MyApp extends StatelessWidget {
 }
 
 /* TODO:
- - Dark theme
  - App icon
 */
