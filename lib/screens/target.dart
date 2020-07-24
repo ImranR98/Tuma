@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ssh_drop/models/target.dart';
 import 'package:ssh_drop/blocs/targetBloc.dart';
+import 'package:ssh_drop/targetConnector.dart';
 
 class TargetPage extends StatefulWidget {
   final Target existingTarget;
@@ -20,6 +21,29 @@ class _TargetPageState extends State<TargetPage> {
   final pathController = TextEditingController();
   List<Map<String, TextEditingController>> hostAndPortControllers =
       new List<Map<String, TextEditingController>>();
+
+  bool disabled = false;
+
+  getTargetFromForm() {
+    return new Target(
+        id: this.target.id,
+        name: nameController.text.trim(),
+        user: usernameController.text.trim(),
+        password: passwordController.text.trim(),
+        privateKey: privatekeyController.text.trim(),
+        path: pathController.text.trim(),
+        hosts: hostAndPortControllers
+            .map((e) => new Host(
+                hostName: e['host'].text.trim(),
+                port: int.parse(e['port'].text.trim())))
+            .toList());
+  }
+
+  isFormValid() {
+    if (_formKey.currentState == null) return false;
+    return _formKey.currentState.validate() &&
+        this.hostAndPortControllers.length > 0;
+  }
 
   @override
   void dispose() {
@@ -87,6 +111,7 @@ class _TargetPageState extends State<TargetPage> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           TextFormField(
+                            enabled: !this.disabled,
                             decoration:
                                 InputDecoration(labelText: 'Target Name'),
                             controller: nameController,
@@ -98,6 +123,7 @@ class _TargetPageState extends State<TargetPage> {
                             },
                           ),
                           TextFormField(
+                            enabled: !this.disabled,
                             decoration: InputDecoration(labelText: 'Username'),
                             controller: usernameController,
                             validator: (value) {
@@ -108,6 +134,7 @@ class _TargetPageState extends State<TargetPage> {
                             },
                           ),
                           TextFormField(
+                            enabled: !this.disabled,
                             obscureText: true,
                             decoration: InputDecoration(
                                 labelText:
@@ -123,6 +150,7 @@ class _TargetPageState extends State<TargetPage> {
                             },
                           ),
                           TextFormField(
+                            enabled: !this.disabled,
                             decoration: InputDecoration(
                                 labelText:
                                     'Private Key ${privatekeyController.text.isEmpty && passwordController.text.isNotEmpty ? " - Optional" : ""}'),
@@ -136,6 +164,7 @@ class _TargetPageState extends State<TargetPage> {
                             },
                           ),
                           TextFormField(
+                            enabled: !this.disabled,
                             decoration: InputDecoration(labelText: 'Path'),
                             controller: pathController,
                             validator: (value) {
@@ -151,6 +180,7 @@ class _TargetPageState extends State<TargetPage> {
                               children: [
                                 Expanded(
                                   child: TextFormField(
+                                    enabled: !this.disabled,
                                     decoration:
                                         InputDecoration(labelText: 'Host'),
                                     controller: e['host'],
@@ -168,6 +198,7 @@ class _TargetPageState extends State<TargetPage> {
                                 SizedBox(width: 8),
                                 Expanded(
                                   child: TextFormField(
+                                    enabled: !this.disabled,
                                     decoration:
                                         InputDecoration(labelText: 'Port'),
                                     controller: e['port'],
@@ -178,7 +209,6 @@ class _TargetPageState extends State<TargetPage> {
                                       }
                                       try {
                                         var number = num.parse(value);
-                                        print(number);
                                         if (number is double)
                                           return 'Please enter a whole number';
                                       } catch (err) {
@@ -202,27 +232,35 @@ class _TargetPageState extends State<TargetPage> {
                                           this.hostAndPortControllers.length >
                                               1,
                                       child: FlatButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            this
-                                                .hostAndPortControllers
-                                                .removeLast();
-                                          });
-                                        },
+                                        onPressed: this.disabled
+                                            ? null
+                                            : () {
+                                                setState(() {
+                                                  this
+                                                      .hostAndPortControllers
+                                                      .removeLast();
+                                                });
+                                              },
                                         child: Text('Remove Alternative Host'),
                                       )),
                                   Visibility(
                                     visible:
                                         this.hostAndPortControllers.length <= 1,
                                     child: FlatButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          this.hostAndPortControllers.add({
-                                            'host': new TextEditingController(),
-                                            'port': new TextEditingController()
-                                          });
-                                        });
-                                      },
+                                      onPressed: this.disabled
+                                          ? null
+                                          : () {
+                                              setState(() {
+                                                this
+                                                    .hostAndPortControllers
+                                                    .add({
+                                                  'host':
+                                                      new TextEditingController(),
+                                                  'port':
+                                                      new TextEditingController()
+                                                });
+                                              });
+                                            },
                                       child: Text('Add Alternative Host'),
                                     ),
                                   ),
@@ -240,45 +278,54 @@ class _TargetPageState extends State<TargetPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         FlatButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
+                          onPressed: this.disabled
+                              ? null
+                              : () {
+                                  Navigator.pop(context);
+                                },
                           child: Text('Cancel'),
                         ),
                         FlatButton(
+                          onPressed: this.disabled
+                              ? null
+                              : () async {
+                                  if (isFormValid()) {
+                                    setState(() {
+                                      this.disabled = true;
+                                    });
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                        content: Text(
+                                            await new TargetConnector()
+                                                .testConnection(
+                                                    getTargetFromForm()))));
+                                    setState(() {
+                                      this.disabled = false;
+                                    });
+                                  }
+                                },
+                          child: Text('Test'),
+                        ),
+                        FlatButton(
                           textColor: Theme.of(context).primaryColor,
-                          onPressed: () async {
-                            if (_formKey.currentState.validate() &&
-                                this.hostAndPortControllers.length > 0) {
-                              if (this.target.id != null) {
-                                await targetBloc.edit(new Target(
-                                    id: this.target.id,
-                                    name: nameController.text,
-                                    user: usernameController.text,
-                                    password: passwordController.text,
-                                    privateKey: privatekeyController.text,
-                                    path: pathController.text,
-                                    hosts: hostAndPortControllers
-                                        .map((e) => new Host(
-                                            hostName: e['host'].text,
-                                            port: int.parse(e['port'].text)))
-                                        .toList()));
-                              } else {
-                                await targetBloc.add(new Target(
-                                    name: nameController.text,
-                                    user: usernameController.text,
-                                    password: passwordController.text,
-                                    privateKey: privatekeyController.text,
-                                    path: pathController.text,
-                                    hosts: hostAndPortControllers
-                                        .map((e) => new Host(
-                                            hostName: e['host'].text,
-                                            port: int.parse(e['port'].text)))
-                                        .toList()));
-                              }
-                              Navigator.pop(context);
-                            }
-                          },
+                          onPressed: this.disabled
+                              ? null
+                              : () async {
+                                  if (isFormValid()) {
+                                    setState(() {
+                                      this.disabled = true;
+                                    });
+                                    if (this.target.id != null) {
+                                      await targetBloc
+                                          .edit(getTargetFromForm());
+                                    } else {
+                                      await targetBloc.add(getTargetFromForm());
+                                    }
+                                    setState(() {
+                                      this.disabled = false;
+                                    });
+                                    Navigator.pop(context);
+                                  }
+                                },
                           child: Text('Save'),
                         ),
                       ],
