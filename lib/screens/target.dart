@@ -136,9 +136,7 @@ class _TargetPageState extends State<TargetPage> {
                           TextFormField(
                             enabled: !this.disabled,
                             obscureText: true,
-                            decoration: InputDecoration(
-                                labelText:
-                                    'Password ${privatekeyController.text.isNotEmpty && passwordController.text.isEmpty ? " - Optional" : ""}'),
+                            decoration: InputDecoration(labelText: 'Password'),
                             controller: passwordController,
                             autocorrect: false,
                             validator: (value) {
@@ -153,7 +151,7 @@ class _TargetPageState extends State<TargetPage> {
                             enabled: !this.disabled,
                             decoration: InputDecoration(
                                 labelText:
-                                    'Private Key ${privatekeyController.text.isEmpty && passwordController.text.isNotEmpty ? " - Optional" : ""}'),
+                                    'Private Key ${privatekeyController.text.isEmpty && passwordController.text.isNotEmpty ? " - Not Used" : ""}'),
                             controller: privatekeyController,
                             validator: (value) {
                               if (value.isEmpty &&

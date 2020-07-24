@@ -29,7 +29,6 @@ class MyApp extends StatelessWidget {
 }
 
 /* TODO:
- - Help Page
  - Dark theme
  - App icon
 */

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ssh_drop/blocs/targetBloc.dart';
 import 'package:ssh_drop/models/target.dart';
+import 'package:ssh_drop/screens/help.dart';
 import 'package:ssh_drop/screens/target.dart';
 import 'package:ssh_drop/screens/upload.dart';
 
@@ -32,6 +33,19 @@ class _HomePageState extends State<HomePage> {
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text('SSH Drop'),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.help_outline),
+            tooltip: 'Help',
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HelpPage(),
+                  ));
+            },
+          ),
+        ],
       ),
       body: StreamBuilder<List<Target>>(
         stream: targetBloc.getTargets,
