@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ssh_drop/screens/upload.dart';
-import 'package:ssh_drop/screens/help.dart';
-import 'package:ssh_drop/screens/home.dart';
-import 'package:ssh_drop/screens/target.dart';
+import 'package:tuma/screens/upload.dart';
+import 'package:tuma/screens/help.dart';
+import 'package:tuma/screens/home.dart';
+import 'package:tuma/screens/target.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'SSH Drop',
+      title: 'Tuma',
       theme: ThemeData(primaryColor: primaryColor, accentColor: accentColor),
       darkTheme: ThemeData(
           primaryColor: primaryColor,

@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:ssh_drop/models/target.dart';
-import 'package:ssh_drop/targetConnector.dart';
+import 'package:tuma/models/target.dart';
+import 'package:tuma/targetConnector.dart';
 
 class UploadPage extends StatefulWidget {
   final Target target;
@@ -54,7 +54,7 @@ class _UploadPageState extends State<UploadPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('SSH Drop  |  Upload'),
+        title: Text('Tuma  |  Upload'),
       ),
       body: Container(
         margin: EdgeInsets.all(8.0),

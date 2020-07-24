@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'package:ssh_drop/db.dart';
-import 'package:ssh_drop/models/target.dart';
+import 'package:tuma/db.dart';
+import 'package:tuma/models/target.dart';
 
 class TargetBloc {
   final targetController = StreamController<List<Target>>();

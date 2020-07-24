@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/services.dart';
 import 'package:ssh/ssh.dart';
-import 'package:ssh_drop/models/target.dart';
+import 'package:tuma/models/target.dart';
 
 class TargetConnector {
   testConnection(Target target) async {
@@ -31,7 +31,7 @@ class TargetConnector {
         if (targetPath.length == 0) throw 'Path does not exist.';
 
         String testDirPath =
-            '$targetPath/SSHDrop_TestDir_${Random().nextInt(10000)}';
+            '$targetPath/Tuma_TestDir_${Random().nextInt(10000)}';
 
         String testDir = (await connections[i].execute(
                 'mkdir $testDirPath && ls -d $testDirPath && rmdir $testDirPath'))

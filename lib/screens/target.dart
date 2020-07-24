@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ssh_drop/models/target.dart';
-import 'package:ssh_drop/blocs/targetBloc.dart';
-import 'package:ssh_drop/targetConnector.dart';
+import 'package:tuma/models/target.dart';
+import 'package:tuma/blocs/targetBloc.dart';
+import 'package:tuma/targetConnector.dart';
 
 class TargetPage extends StatefulWidget {
   final Target existingTarget;
@@ -93,8 +93,7 @@ class _TargetPageState extends State<TargetPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:
-            Text('SSH Drop  |  ${target.id != null ? "Edit" : "Add"} Target'),
+        title: Text('Tuma  |  ${target.id != null ? "Edit" : "Add"} Target'),
       ),
       body: LayoutBuilder(builder: (context, constraints) {
         return SingleChildScrollView(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:ssh_drop/blocs/targetBloc.dart';
-import 'package:ssh_drop/models/target.dart';
-import 'package:ssh_drop/screens/help.dart';
-import 'package:ssh_drop/screens/target.dart';
-import 'package:ssh_drop/screens/upload.dart';
+import 'package:tuma/blocs/targetBloc.dart';
+import 'package:tuma/models/target.dart';
+import 'package:tuma/screens/help.dart';
+import 'package:tuma/screens/target.dart';
+import 'package:tuma/screens/upload.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text('SSH Drop'),
+        title: Text('Tuma'),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.help_outline),

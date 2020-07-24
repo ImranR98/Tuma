@@ -1,4 +1,4 @@
-package dev.imranr.ssh_drop
+package dev.imranr.tuma
 
 import io.flutter.embedding.android.FlutterActivity
 

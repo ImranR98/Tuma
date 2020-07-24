@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:ssh_drop/models/target.dart';
+import 'package:tuma/models/target.dart';
 
 class DBProvider {
   DBProvider._();
@@ -21,7 +21,7 @@ class DBProvider {
 
   initDB() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentsDirectory.path, 'SSHDropDB.db');
+    String path = join(documentsDirectory.path, 'TumaDB.db');
     return await openDatabase(path, version: 1, onOpen: (db) {},
         onCreate: (Database db, int version) async {
       await db.execute('CREATE TABLE Target ('
@@ -116,6 +116,6 @@ class DBProvider {
 
   deleteDB() async {
     deleteDatabase(
-        join((await getApplicationDocumentsDirectory()).path, 'SSHDropDB.db'));
+        join((await getApplicationDocumentsDirectory()).path, 'TumaDB.db'));
   }
 }

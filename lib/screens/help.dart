@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 
 class HelpPage extends StatefulWidget {
   HelpPage({Key key}) : super(key: key);
@@ -13,7 +12,7 @@ class _HelpPageState extends State<HelpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('SSH Drop  |  Help'),
+        title: Text('Tuma  |  Help'),
       ),
       body: Padding(
         padding: EdgeInsets.all(8.0),
@@ -23,6 +22,12 @@ class _HelpPageState extends State<HelpPage> {
             Text(
               'Upload files to SFTP servers.',
               textScaleFactor: 1.5,
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Text(
+              'The data required to upload files to a specific path on an SFTP server is called a Target.',
             ),
             SizedBox(
               height: 8,

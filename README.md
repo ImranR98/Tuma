@@ -1,6 +1,6 @@
-# ssh_drop
+# tuma
 
-A new Flutter project.
+Upload files to SFTP servers.
 
 ## Getting Started
 
