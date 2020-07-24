@@ -29,3 +29,11 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+/* TODO:
+ - Upload page doesn't close if no files selected
+ - Make bottom bar transparent
+ - Make help page look better and add dev name + github link
+ - Add screenshots to README
+ - Publish to Play store
+*/
