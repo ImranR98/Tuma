@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ssh_drop/blocs/targetBloc.dart';
 import 'package:ssh_drop/models/target.dart';
 import 'package:ssh_drop/screens/target.dart';
+import 'package:ssh_drop/screens/upload.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -11,6 +12,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     super.initState();
@@ -26,6 +29,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text('SSH Drop'),
       ),
@@ -93,8 +97,13 @@ class _HomePageState extends State<HomePage> {
                                 ));
                             targetBloc.updateTargets();
                           } else {
-                            // TODO: Bring up file picker and send file paths, along with Target, to new Upload page
-                            // List<File> files = await FilePicker.getMultiFile(); // Use this
+                            await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => UploadPage(
+                                      target: snapshot.data[index],
+                                      scaffoldKey: _scaffoldKey),
+                                ));
                           }
                           return false;
                         },

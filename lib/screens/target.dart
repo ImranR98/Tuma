@@ -328,6 +328,7 @@ class _TargetPageState extends State<TargetPage> {
                           ),
                         ),
                         FlatButton(
+                          textColor: Theme.of(context).accentColor,
                           onPressed: this.disabled
                               ? null
                               : () async {

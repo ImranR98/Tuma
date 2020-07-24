@@ -27,3 +27,10 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+/* TODO:
+ - Better error messages for SSH connections
+ - Help Page
+ - Dark theme
+ - App icon
+*/
