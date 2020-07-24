@@ -30,24 +30,29 @@ class _UploadPageState extends State<UploadPage> {
     setState(() {
       files = tempFiles;
     });
-    if (files != null) if (files.length == 0) Navigator.pop(context);
-    try {
-      await new TargetConnector().uploadFiles(
-          widget.target, files.map((file) => file.path).toList(), (progress) {
-        setState(() {
-          currentFileProgress = progress;
-          if (progress == 100) filesUploaded += 1;
+    if (files == null)
+      Navigator.pop(context);
+    else if (files.length == 0)
+      Navigator.pop(context);
+    else {
+      try {
+        await new TargetConnector().uploadFiles(
+            widget.target, files.map((file) => file.path).toList(), (progress) {
+          setState(() {
+            currentFileProgress = progress;
+            if (progress == 100) filesUploaded += 1;
+          });
         });
-      });
-      widget.scaffoldKey.currentState.showSnackBar(SnackBar(
-        content: Text('Uploaded.'),
-      ));
-    } on String catch (err) {
-      widget.scaffoldKey.currentState.showSnackBar(SnackBar(
-        content: Text(err),
-      ));
+        widget.scaffoldKey.currentState.showSnackBar(SnackBar(
+          content: Text('Uploaded.'),
+        ));
+      } on String catch (err) {
+        widget.scaffoldKey.currentState.showSnackBar(SnackBar(
+          content: Text(err),
+        ));
+      }
+      Navigator.pop(context);
     }
-    Navigator.pop(context);
   }
 
   @override
@@ -57,7 +62,7 @@ class _UploadPageState extends State<UploadPage> {
         title: Text('Tuma  |  Upload'),
       ),
       body: Container(
-        margin: EdgeInsets.all(8.0),
+        margin: EdgeInsets.all(12.0),
         child: Center(
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Visibility(
@@ -76,7 +81,7 @@ class _UploadPageState extends State<UploadPage> {
                 textScaleFactor: 1.5,
               ),
             ),
-            SizedBox(height: 8),
+            SizedBox(height: 12),
             Visibility(
               visible: files != null,
               child: LinearProgressIndicator(

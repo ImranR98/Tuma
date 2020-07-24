@@ -97,7 +97,7 @@ class _TargetPageState extends State<TargetPage> {
       ),
       body: LayoutBuilder(builder: (context, constraints) {
         return SingleChildScrollView(
-            padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+            padding: EdgeInsets.fromLTRB(12, 0, 12, 0),
             child: ConstrainedBox(
                 constraints: BoxConstraints(
                     minWidth: constraints.maxWidth,
@@ -192,7 +192,7 @@ class _TargetPageState extends State<TargetPage> {
                                     },
                                   ),
                                 ),
-                                SizedBox(width: 8),
+                                SizedBox(width: 12),
                                 Expanded(
                                   child: TextFormField(
                                     enabled: !this.disabled,

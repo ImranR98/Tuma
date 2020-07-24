@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tuma/screens/upload.dart';
 import 'package:tuma/screens/help.dart';
 import 'package:tuma/screens/home.dart';
@@ -6,6 +7,11 @@ import 'package:tuma/screens/target.dart';
 
 void main() {
   runApp(MyApp());
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    systemNavigationBarColor: Colors.transparent,
+    systemNavigationBarDividerColor: Colors.transparent,
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -31,9 +37,6 @@ class MyApp extends StatelessWidget {
 }
 
 /* TODO:
- - Upload page doesn't close if no files selected
- - Make bottom bar transparent
- - Make help page look better and add dev name + github link
  - Add screenshots to README
  - Publish to Play store
 */
