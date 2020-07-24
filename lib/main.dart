@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => HomePage(),
         '/target': (context) => TargetPage(),
-        '/drop': (context) => UploadPage(),
+        '/upload': (context) => UploadPage(),
         '/help': (context) => HelpPage(),
       },
     );
