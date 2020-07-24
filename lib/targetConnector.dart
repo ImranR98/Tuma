@@ -9,12 +9,12 @@ class TargetConnector {
     var connections = new List<SSHClient>();
     target.hosts.forEach((host) {
       connections.add(new SSHClient(
-        host: host.hostName,
+        host: host.hostName.trim(),
         port: host.port,
-        username: target.user,
+        username: target.user.trim(),
         passwordOrKey: target.password.length > 0
-            ? target.password
-            : {'privateKey': target.privateKey},
+            ? target.password.trim()
+            : {'privateKey': target.privateKey.trim()},
       ));
     });
 
@@ -50,10 +50,40 @@ class TargetConnector {
         message = err;
       }
     }
-    if (success) {
-      if (target.hosts.length == 1) return 'Connection Successful';
-      return 'Connection Successful on ${target.hosts[hostIndex].hostName}';
-    } else
-      return message;
+    if (success) return hostIndex;
+    throw message;
+  }
+
+  Future<List<String>> uploadFiles(
+      Target target, List<String> filePaths, Function callback) async {
+    try {
+      int hostIndex = await testConnection(target);
+      var connection = new SSHClient(
+          host: target.hosts[hostIndex].hostName.trim(),
+          port: target.hosts[hostIndex].port,
+          username: target.user.trim(),
+          passwordOrKey: target.password.length > 0
+              ? target.password.trim()
+              : {'privateKey': target.privateKey.trim()});
+      await connection.connect();
+      String targetPath =
+          (await connection.execute('cd / && ls -d ${target.path}')).trim();
+
+      await connection.connectSFTP();
+
+      List<String> results = new List<String>();
+
+      for (int i = 0; i < filePaths.length; i++) {
+        results.add(await connection.sftpUpload(
+            path: filePaths[i].trim(), toPath: targetPath, callback: callback));
+      }
+
+      connection.disconnectSFTP();
+      connection.disconnect();
+
+      return results;
+    } on PlatformException catch (err) {
+      throw err.message;
+    }
   }
 }

@@ -335,11 +335,19 @@ class _TargetPageState extends State<TargetPage> {
                                     setState(() {
                                       this.disabled = true;
                                     });
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                        content: Text(
-                                            await new TargetConnector()
-                                                .testConnection(
-                                                    getTargetFromForm()))));
+                                    try {
+                                      int hostIndex =
+                                          await new TargetConnector()
+                                              .testConnection(
+                                                  getTargetFromForm());
+                                      Scaffold.of(context).showSnackBar(SnackBar(
+                                          content: Text(target.hosts.length > 1
+                                              ? 'Connection Successful on ${target.hosts[hostIndex].hostName}'
+                                              : 'Connection Successful')));
+                                    } catch (err) {
+                                      Scaffold.of(context).showSnackBar(
+                                          SnackBar(content: Text(err)));
+                                    }
                                     setState(() {
                                       this.disabled = false;
                                     });

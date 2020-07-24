@@ -94,6 +94,7 @@ class _HomePageState extends State<HomePage> {
                             targetBloc.updateTargets();
                           } else {
                             // TODO: Bring up file picker and send file paths, along with Target, to new Upload page
+                            // List<File> files = await FilePicker.getMultiFile(); // Use this
                           }
                           return false;
                         },
