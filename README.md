@@ -16,12 +16,16 @@ To Edit a saved Target or Upload files to it, swipe it to the left or right to a
 
 ## Screenshots
 ### Targets
-![Screenshot of Main Screen](/screenshots/home.png?raw=true "Main")
+<img src="/screenshots/home.png" alt="drawing" width="300" alt="Screenshot of Main Screen"/>
+
 ### Create/Edit Target
-![Screenshot of Target Screen](/screenshots/target.png?raw=true "Target")
+<img src="/screenshots/target.png" alt="drawing" width="300" alt="Screenshot of Target Screen"/>
+
 ### Upload to Target
-![Screenshot of Upload Screen](/screenshots/upload.png?raw=true "Upload")
+<img src="/screenshots/upload.png" alt="drawing" width="300" alt="Screenshot of Upload Screen"/>
+
 ### Help
-![Screenshot of Help Screen](/screenshots/help.png?raw=true "Help")
+<img src="/screenshots/help.png" alt="drawing" width="300" alt="Screenshot of Help Screen"/>
+
 ### Dark Mode
-![Screenshot of Dark Mode](/screenshots/dark.png?raw=true "Dark Mode")
+<img src="/screenshots/dark.png" alt="drawing" width="300" alt="Screenshot of Dark Mode"/>

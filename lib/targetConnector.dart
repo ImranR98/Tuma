@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/services.dart';
@@ -23,7 +24,7 @@ class TargetConnector {
     int hostIndex = 0;
     for (int i = 0; i < connections.length && success == false; i++) {
       try {
-        await connections[i].connect();
+        await (connections[i].connect()).timeout(Duration(seconds: 5));
 
         String targetPath =
             (await connections[i].execute('cd / && ls -d ${target.path}'))
@@ -51,6 +52,8 @@ class TargetConnector {
           message = err.message;
       } on String catch (err) {
         message = err;
+      } on TimeoutException catch (err) {
+        message = 'Took too long to connect.';
       }
     }
     if (success) return hostIndex;
