@@ -7,6 +7,7 @@ import 'package:tuma/models/target.dart';
 
 class TargetConnector {
   testConnection(Target target) async {
+    // Generate a list of SSH connections based on the hosts
     var connections = new List<SSHClient>();
     target.hosts.forEach((host) {
       connections.add(new SSHClient(
@@ -19,50 +20,56 @@ class TargetConnector {
       ));
     });
 
-    bool success = false;
-    String message;
+    // Try connecting to each host and store the index of the first one that works
     int hostIndex = 0;
-    for (int i = 0; i < connections.length && success == false; i++) {
+    bool connected = false;
+    String error;
+    for (int i = 0; i < connections.length && !connected; i++) {
       try {
         await (connections[i].connect()).timeout(Duration(seconds: 5));
-
-        String targetPath =
-            (await connections[i].execute('cd / && ls -d ${target.path}'))
-                .trim();
-        if (targetPath.length == 0) throw 'Path does not exist.';
-
-        String testDirPath =
-            '$targetPath/Tuma_TestDir_${Random().nextInt(10000)}';
-
-        String testDir = (await connections[i].execute(
-                'mkdir $testDirPath && ls -d $testDirPath && rmdir $testDirPath'))
-            .trim();
-
-        if (testDir.length == 0)
-          throw 'You don\'t have permission to write to this path.';
-
-        success = true;
+        connected = true;
         hostIndex = i;
-
-        await connections[i].disconnect();
       } on PlatformException catch (err) {
         if (err.code == 'connection_failure')
-          message = 'Connection or Authentication Error.';
+          error = 'Connection or Authentication Error.';
         else
-          message = err.message;
-      } on String catch (err) {
-        message = err;
+          error = err.message;
       } on TimeoutException catch (err) {
-        message = 'Took too long to connect.';
+        error =
+            'Took too long to connect - more than ${err.duration.inSeconds} seconds.';
       }
     }
-    if (success) return hostIndex;
-    throw message;
+    if (!connected) throw error;
+
+    // Make sure that the specified path exists and that you have read/write permission
+    try {
+      String targetPath =
+          (await connections[hostIndex].execute('cd / && ls -d ${target.path}'))
+              .trim();
+      if (targetPath.length == 0) throw 'Path does not exist.';
+
+      String testDirPath =
+          '$targetPath/Tuma_TestDir_${Random().nextInt(10000)}';
+
+      String testDir = (await connections[hostIndex].execute(
+              'mkdir $testDirPath && ls -d $testDirPath && rmdir $testDirPath'))
+          .trim();
+      if (testDir.length == 0)
+        throw 'You don\'t have permission to write to this path.';
+      await connections[hostIndex].disconnect();
+    } on String catch (err) {
+      await connections[hostIndex].disconnect();
+      throw err;
+    }
+
+    // If you made it this far without throwing an error, you have found and validated a host. Return it's index
+    return hostIndex;
   }
 
   Future<List<String>> uploadFiles(
       Target target, List<String> filePaths, Function callback) async {
     try {
+      // Make sure at least one of the hosts is valid, and find it's index, using the testConnection function above
       int hostIndex = await testConnection(target);
       var connection = new SSHClient(
           host: target.hosts[hostIndex].hostName.trim(),
@@ -71,12 +78,16 @@ class TargetConnector {
           passwordOrKey: target.password.length > 0
               ? target.password.trim()
               : {'privateKey': target.privateKey.trim()});
+
+      // Find the absolute path (in case the user provided a relative to home path)
       await connection.connect();
       String targetPath =
           (await connection.execute('cd / && ls -d ${target.path}')).trim();
 
+      // All validation so far used SSH. Connect with SFTP to do the actual upload
       await connection.connectSFTP();
 
+      // Upload the files and add the results to a list, (after each upload, call a callback function)
       List<String> results = new List<String>();
 
       for (int i = 0; i < filePaths.length; i++) {
@@ -84,9 +95,11 @@ class TargetConnector {
             path: filePaths[i].trim(), toPath: targetPath, callback: callback));
       }
 
+      // Disconnect on SFTP and SSH
       connection.disconnectSFTP();
       connection.disconnect();
 
+      // Return the result array
       return results;
     } on PlatformException catch (err) {
       if (err.code == 'connection_failure')

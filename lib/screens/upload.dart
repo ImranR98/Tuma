@@ -15,7 +15,6 @@ class UploadPage extends StatefulWidget {
 }
 
 class _UploadPageState extends State<UploadPage> {
-  int currentFileProgress = 0;
   int filesUploaded = 0;
   List<File> files;
 
@@ -39,7 +38,6 @@ class _UploadPageState extends State<UploadPage> {
         await new TargetConnector().uploadFiles(
             widget.target, files.map((file) => file.path).toList(), (progress) {
           setState(() {
-            currentFileProgress = progress;
             if (progress == 100) filesUploaded += 1;
           });
         });
@@ -68,9 +66,9 @@ class _UploadPageState extends State<UploadPage> {
             Visibility(
               visible: files != null,
               child: Text(
-                'Uploading File ${files != null ? filesUploaded + 1 < files.length ? filesUploaded + 1 : files.length : 0} of ${files != null ? files.length : 0}',
+                'Uploading File ${files != null ? filesUploaded + 1 < files.length ? filesUploaded + 1 : files.length : 0} of ${files != null ? files.length : 0}...',
                 style: TextStyle(color: Colors.grey[700]),
-                textScaleFactor: 1,
+                textScaleFactor: 1.5,
               ),
             ),
             Visibility(
@@ -81,11 +79,15 @@ class _UploadPageState extends State<UploadPage> {
                 textScaleFactor: 1.5,
               ),
             ),
-            SizedBox(height: 12),
+            SizedBox(
+              height: 12,
+            ),
             Visibility(
               visible: files != null,
-              child: LinearProgressIndicator(
-                value: currentFileProgress.toDouble(),
+              child: Text(
+                '${files != null ? files[filesUploaded].path : 0}',
+                style: TextStyle(color: Colors.grey[700]),
+                textScaleFactor: 1,
               ),
             ),
           ]),
