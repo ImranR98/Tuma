@@ -147,10 +147,12 @@ class _TargetPageState extends State<TargetPage> {
                             },
                           ),
                           TextFormField(
+                            keyboardType: TextInputType.multiline,
+                            maxLines: null,
                             enabled: !this.disabled,
                             decoration: InputDecoration(
                                 labelText:
-                                    'Private Key ${privatekeyController.text.isEmpty && passwordController.text.isNotEmpty ? " - Not Used" : ""}'),
+                                    'Private Key (RSA) ${privatekeyController.text.isEmpty && passwordController.text.isNotEmpty ? " - Not Used" : ""}'),
                             controller: privatekeyController,
                             validator: (value) {
                               if (value.isEmpty &&
