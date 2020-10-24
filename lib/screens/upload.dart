@@ -16,7 +16,7 @@ class UploadPage extends StatefulWidget {
 
 class _UploadPageState extends State<UploadPage> {
   int filesUploaded = 0;
-  List<PlatformFile> files;
+  List<File> files;
 
   @override
   void initState() {
@@ -25,8 +25,7 @@ class _UploadPageState extends State<UploadPage> {
   }
 
   pickAndUpload() async {
-    var tempFiles =
-        (await FilePicker.platform.pickFiles(allowMultiple: true)).files;
+    var tempFiles = await FilePicker.getMultiFile();
     setState(() {
       files = tempFiles;
     });
