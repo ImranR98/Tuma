@@ -25,9 +25,9 @@ class _UploadPageState extends State<UploadPage> {
   }
 
   pickAndUpload() async {
-    var tempFiles = await FilePicker.getMultiFile();
+    var tempFiles = await FilePicker.platform.pickFiles(allowMultiple: true);
     setState(() {
-      files = tempFiles;
+      files = tempFiles.paths.map((path) => File(path)).toList();
     });
     if (files == null)
       Navigator.pop(context);

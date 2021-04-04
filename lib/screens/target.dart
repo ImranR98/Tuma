@@ -152,7 +152,7 @@ class _TargetPageState extends State<TargetPage> {
                             enabled: !this.disabled,
                             decoration: InputDecoration(
                                 labelText:
-                                    'Private Key (RSA) ${privatekeyController.text.isEmpty && passwordController.text.isNotEmpty ? " - Not Used" : ""}'),
+                                    'Private Key (RSA Only) ${privatekeyController.text.isEmpty && passwordController.text.isNotEmpty ? " - Not Used" : ""}'),
                             controller: privatekeyController,
                             validator: (value) {
                               if (value.isEmpty &&
