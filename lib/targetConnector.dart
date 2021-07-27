@@ -97,7 +97,6 @@ class TargetConnector {
 
       // Disconnect on SFTP and SSH
       connection.disconnectSFTP();
-      connection.disconnect();
 
       // Return the result array
       return results;
